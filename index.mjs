@@ -15,7 +15,7 @@ const postUrlToInstapaper = url => {
 
 exec("/usr/local/bin/pbpaste-html", (err, stdout, stderr) => {
   const links = new RegExp(/href\s*=\s*(['"])(https?:\/\/.+?)\1/, "gi");
-  const urls = Array.from(stdout.matchAll(links));
-  urls.forEach(x => postUrlToInstapaper(x[2]));
+  const urls = Array.from(stdout.matchAll(links)).map(x => x[2]);
+  Array.from(new Set(urls)).forEach(x => postUrlToInstapaper(x));
   console.log(`${urls.length} sent to Instapaper`);
 });
